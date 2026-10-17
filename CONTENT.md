@@ -2,6 +2,8 @@
 
 **The engineering, evidence and industrial reasoning behind a supervised AI production-preparation system.**  
 **Team Nucleas 路 AI Builder Cup 2026 路 JAPAC**  
+**Team Lead:** Siddhant Oswal 路 Cloud, AI agent and application engineering  
+**Team Member:** Om Jain 路 Corrugated-plant operations, production data and models  
 **Problem statement:** Manufacturing: Intelligent Operations & Industrial Efficiency  
 **Submission category:** Sustainability  
 **Status:** Working supervised prototype. Some outputs are modeled; measured plant savings and predictive factory accuracy have not been established.
@@ -64,7 +66,7 @@ Momentum's initial question is not, 鈥淐an AI replace a production supervisor?鈥
 
 ## 2. How the team arrived at the idea
 
-Momentum is built by **Team Nucleas**, led by Siddhant Oswal with Om Jain. The project combines software and AI engineering with **direct operational access to a corrugated manufacturing environment through Om**. That access matters because variables such as flute, paper specifications, adhesives, line conditions, operators and practical constraints cannot be treated as abstract prompt text alone.
+Momentum is built by **Team Nucleas**: **Siddhant Oswal** (team lead; cloud, AI agent and application engineering) and **Om Jain** (team member; corrugated-plant operations, production data and models). The project combines software and AI engineering with **direct operational access to a corrugated manufacturing environment through Om**. That access matters because variables such as flute, paper specifications, adhesives, line conditions, operators and practical constraints cannot be treated as abstract prompt text alone.
 
 The team selected corrugated manufacturing as the initial domain rather than claiming one universal AI model can understand every factory. The first product boundary is deliberately **pre-run preparation and supervisory review**, not live autonomous control. This makes it possible to demonstrate a bounded system with a real product catalog, approved demo inputs, controlled model-based comparisons and persistent approved instructions.
 
