@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Momentum: engineering, evidence, FAQ and context behind a supervised AI manufacturing production-preparation prototype for AI Builder Cup 2026.">
+<meta name="theme-color" content="#f8f7f4">
+<title>Momentum | Behind the Build</title>
+<style>
+:root{--bg:#f8f7f4;--paper:#fffefa;--ink:#18202b;--muted:#596573;--teal:#145c54;--teal-dark:#104740;--teal-pale:#e8efeb;--gold:#c8a96b;--line:#e1e2dd;--soft:#f3f3ef;--shadow:0 20px 70px rgba(20,31,31,.055)}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:104px}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased}a{color:var(--teal);text-underline-offset:3px}a:hover{color:#0c3f38}a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid #92beb4;outline-offset:3px}
+.top{height:72px;background:#fffefa;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:0 max(24px,calc((100% - 1520px)/2));gap:20px;box-shadow:0 4px 25px rgba(0,0,0,.024)}
+.brand{display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--ink);font-size:20px;font-weight:800;letter-spacing:-.6px;white-space:nowrap}.brand svg{width:32px;height:32px}.brand small{font-size:10px;color:var(--teal);letter-spacing:1.3px;font-weight:800;margin-left:6px}.top-right{display:flex;gap:14px;align-items:center}.top-right a{font-size:12px;font-weight:750;text-decoration:none;border:1px solid #d8e3de;border-radius:12px;padding:8px 12px;white-space:nowrap}.top-right a.primary{background:var(--teal);color:white;border-color:var(--teal)}
+.layout{display:grid;grid-template-columns:minmax(225px,285px) minmax(0,980px);gap:50px;max-width:1510px;margin:0 auto;padding:35px 28px 90px}.sidebar{position:sticky;top:107px;align-self:start;height:calc(100vh - 120px);overflow:auto;border-right:1px solid var(--line);padding-right:18px;scrollbar-width:thin}.sidebar strong{font-size:12px;color:var(--teal);text-transform:uppercase;letter-spacing:1.2px}.nav{margin-top:12px;display:flex;flex-direction:column;gap:1px}.nav a{display:block;padding:8px 12px;border-radius:9px;color:#4e5b65;text-decoration:none;font-size:13px;line-height:1.35}.nav a:hover,.nav a.active{color:var(--teal);background:var(--teal-pale)}
+.search-wrap{margin:18px 0 8px}.search-wrap input{width:100%;border:1px solid #d1ded8;background:white;border-radius:11px;padding:12px 14px;color:var(--ink);font:inherit;font-size:13px;outline:none}.results{font-size:12px;max-height:220px;overflow:auto}.results a{display:block;padding:7px 10px;text-decoration:none;border-bottom:1px solid var(--line)}
+.main{min-width:0}.intro{padding:0 0 33px;border-bottom:1px solid var(--line);margin-bottom:42px}.eyebrow{font-size:11px;font-weight:800;color:var(--teal);letter-spacing:1.7px;text-transform:uppercase;margin-bottom:20px}.cover{background:linear-gradient(125deg,#e7ede8,#f9f8f4 58%);padding:36px 46px;border:1px solid #dee5df;border-radius:24px;margin-bottom:26px}.cover h1{font-size:clamp(36px,5vw,65px);letter-spacing:-2.2px;line-height:1.06;margin:0;color:var(--ink)}.cover p{font-size:16px;color:#4b5c61;margin:14px 0 0;max-width:760px}.meta{display:flex;gap:8px;flex-wrap:wrap;margin:24px 0 4px}.chip{background:var(--teal-pale);color:var(--teal-dark);border-radius:999px;padding:6px 13px;font-size:11px;font-weight:760}.chip:last-child{background:#f2eada;color:#78602f}
+.doc{background:transparent;max-width:940px}.doc h1{display:none}.doc>p:first-of-type{display:none}.doc>p:nth-of-type(2){display:none}.doc h2{font-size:clamp(25px,3.2vw,39px);line-height:1.18;letter-spacing:-1px;margin:78px 0 25px;border-top:1px solid var(--line);padding-top:38px}.doc h3{font-size:21px;line-height:1.4;letter-spacing:-.35px;margin:35px 0 12px;color:#28313c}.doc h4{margin:27px 0 8px;font-size:17px}.doc p,.doc li{font-size:15px;color:#46535f}.doc ul,.doc ol{padding-left:23px}.doc li{padding:4px 0}.doc li::marker{color:var(--teal)}.doc strong{color:var(--ink)}.doc blockquote{padding:17px 21px;border-left:4px solid var(--teal);background:#eaf1ec;border-radius:0 12px 12px 0;margin:22px 0}.doc blockquote p{margin:0;color:#294c46}.doc hr{border:0;border-top:1px solid var(--line);margin:28px 0}.doc img{display:block;max-width:100%;height:auto;object-fit:contain;border:1px solid #d6dcd8;border-radius:13px;background:white;box-shadow:var(--shadow);margin:18px 0}.doc img[src*="production"],.doc img[src*="recommendation"],.doc img[src*="five-risk"]{max-height:580px}.doc em{font-size:13px;color:#667480}.doc table{width:100%;border-collapse:separate;border-spacing:0;border:1px solid #dbe1dc;border-radius:12px;overflow:hidden;background:white;font-size:13px;margin:19px 0 30px}.doc th{text-align:left;background:#e8efeb;color:var(--teal-dark);font-size:12px}.doc th,.doc td{border-bottom:1px solid #e8eae6;padding:12px 13px;vertical-align:top}.doc tr:last-child td{border-bottom:none}.doc tbody tr:nth-child(even){background:#fcfcfa}.doc td{color:#43545e}.doc table a{word-break:break-word}.doc code{background:#e7ebe8;border-radius:4px;padding:1px 4px}.doc pre{overflow:auto;background:#1b2426;color:white;padding:15px;border-radius:12px}
+.foot{border-top:1px solid var(--line);font-size:12px;color:var(--muted);padding:30px 0;margin-top:70px}.status{font-size:12px;color:var(--teal);font-weight:750}.back{display:none}.faq-filter{display:none}
+@media(max-width:1050px){.layout{grid-template-columns:minmax(200px,230px) minmax(0,1fr);gap:26px;padding:26px 20px}.cover{padding:28px}.top-right a:not(.primary){display:none}}
+@media(max-width:760px){.layout{display:block;padding:12px 18px 60px}.sidebar{position:relative;top:auto;overflow:visible;height:auto;border:0;padding:8px 0 22px}.nav{max-height:140px;overflow:auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.nav a{font-size:12px;padding:8px 9px}.top{height:65px;padding:0 17px}.brand{font-size:18px}.brand small{display:none}.top-right{gap:8px}.top-right a.primary{font-size:11px;padding:7px 10px}.intro{margin-bottom:0}.cover{border-radius:17px;padding:26px}.cover h1{letter-spacing:-1.2px}.doc h2{margin-top:45px;padding-top:26px}.doc p,.doc li{font-size:14.5px}.doc table{display:block;overflow-x:auto}.doc th,.doc td{min-width:125px}.doc blockquote{margin:15px 0}.back{display:inline-block;position:fixed;right:14px;bottom:16px;z-index:40;background:var(--teal);color:white;text-decoration:none;border-radius:999px;padding:10px 15px;font-size:12px;box-shadow:var(--shadow)}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header class="top"><a class="brand" href="#top"><svg viewBox="0 0 32 32" fill="none" stroke="#c8a96b" stroke-width="1.8"><path d="M16 2 29 9v14L16 30 3 23V9zM3 9l13 7 13-7M16 16v14M10 5l13 7"/></svg>Momentum <small>BEHIND THE BUILD</small></a><div class="top-right"><a href="https://github.com/SiddhantOswal/Momentum" target="_blank" rel="noopener noreferrer">Source code</a><a href="https://momentum-514663464609.asia-south1.run.app/" class="primary" target="_blank" rel="noopener noreferrer">Open application ↗</a></div></header>
+<div class="layout" id="top">
+<aside class="sidebar"><strong>Explore Momentum</strong><div class="search-wrap"><input type="search" id="kbsearch" autocomplete="off" placeholder="Search the knowledge bank" aria-label="Search the knowledge bank"></div><div class="results" id="searchresults" aria-live="polite"></div><nav class="nav" aria-label="Document sections"><a href="#start-here-momentum-in-two-minutes">Start here: Momentum in two minutes</a>
+<a href="#1-why-this-problem-exists">1. Why this problem exists</a>
+<a href="#2-how-the-team-arrived-at-the-idea">2. How the team arrived at the idea</a>
+<a href="#3-what-momentum-does-today">3. What Momentum does today</a>
+<a href="#4-example-one-reference-lot-one-bounded-comparison">4. Example: one reference lot, one bounded comparison</a>
+<a href="#5-ai-and-numerical-intelligence-what-each-component-does">5. AI and numerical intelligence: what each component does</a>
+<a href="#6-engineering-architecture">6. Engineering architecture</a>
+<a href="#7-responsible-use-controls-and-what-is-not-claimed">7. Responsible use, controls and what is not claimed</a>
+<a href="#8-testing-and-performance-evidence">8. Testing and performance evidence</a>
+<a href="#9-what-differentiates-momentum">9. What differentiates Momentum</a>
+<a href="#10-sustainability-and-social-usefulness">10. Sustainability and social usefulness</a>
+<a href="#11-roadmap-and-scalability">11. Roadmap and scalability</a>
+<a href="#12-screenshots-and-visual-evidence-gallery">12. Screenshots and visual evidence gallery</a>
+<a href="#13-frequently-asked-questions">13. Frequently asked questions</a>
+<a href="#14-glossary">14. Glossary</a>
+<a href="#15-source-register-and-evidence-links">15. Source register and evidence links</a></nav><p class="status">Supervised prototype · Evidence-led</p></aside>
+<main class="main">
+<div class="intro"><div class="cover"><div class="eyebrow">Team Nucleas &nbsp; / &nbsp; AI Builder Cup 2026</div><h1>Momentum.<br>Behind the Build.</h1><p>The complete technical companion to the industrial production intelligence prototype.</p><div class="meta"><span class="chip">Manufacturing · Intelligent operations</span><span class="chip">Google Cloud + Gemini</span><span class="chip">Sustainability category</span></div></div></div>
+<article class="doc" id="document"><h1 id="momentum--behind-the-build">Momentum | Behind the Build</h1>
+<p><strong>The engineering, evidence and industrial reasoning behind a supervised AI production-preparation system.</strong><br />
+<strong>Team Nucleas · AI Builder Cup 2026 · JAPAC</strong><br />
+<strong>Problem statement:</strong> Manufacturing: Intelligent Operations &amp; Industrial Efficiency<br />
+<strong>Submission category:</strong> Sustainability<br />
+<strong>Status:</strong> Working supervised prototype. Some outputs are modeled; measured plant savings and predictive factory accuracy have not been established.</p>
+<blockquote>
+<p><strong>The premise:</strong> Before a manufacturing run starts, operators make a collection of decisions that influence material use, conversion cost, quality and practical feasibility. Momentum prepares those decisions for review using confirmed order data, bounded numerical comparisons and explainable AI-assisted recommendations. It does not operate machinery.</p>
+</blockquote>
+<p><strong>Explore:</strong> <a href="https://momentum-514663464609.asia-south1.run.app/">Live Momentum application</a> · <a href="https://github.com/SiddhantOswal/Momentum">Public GitHub repository</a> · <a href="https://github.com/SiddhantOswal/Momentum/blob/main/docs/README.md">Source and local setup</a> · <a href="https://forms.gle/4NWFdb8USJopqPwV7">Optional project feedback</a></p>
+<hr />
+<h2 id="start-here-momentum-in-two-minutes">Start here: Momentum in two minutes</h2>
+<p>Momentum is an AI-assisted production-intelligence prototype focused initially on <strong>corrugated packaging manufacturing</strong>. It starts with an approved purchase order (PO). Gemini helps extract order information, the application resolves and validates the relevant catalog entry, and an operator confirms conditions and planned settings. Five BigQuery ML models estimate defect-related risks. A constrained search compares permissible machine-setting alternatives using modeled quality and cost information. Gemini helps explain the supplied evidence. The resulting recommendation is saved as a <strong>DRAFT</strong>; an authorized supervisor must review and approve it before the approved PDF job card can be retrieved.</p>
+<p>The business rationale is simple. <strong>Selling an order does not guarantee that it is produced at the intended margin.</strong> A box can be sellable and still cost more to make than planned because of material overuse, settings, changeovers or other inefficiencies. Momentum targets better pre-run decision support, not merely scrap detection. The current measured technical success is the functioning preparation-and-approval workflow; reductions in actual factory cost remain to be proven with real production outcomes.</p>
+<h3 id="one-complete-journey">One complete journey</h3>
+<p><strong>Approved PO → Gemini extraction → catalog match → operator confirms inputs → five risk estimates → constrained setting comparison → grounded explanation → stored DRAFT → supervisor approval → stored and retrievable PDF job card.</strong></p>
+<p>The app provides three principal workspaces: <strong>New Lot</strong> (the main preparation journey), <strong>Defect Check</strong> (historical evidence and approved photo diagnosis), and <strong>Impact</strong> (modeled comparison and reporting). It is hosted on Google Cloud Run and uses managed Google services for AI, data and durable artifacts. For the exact service responsibilities, see <a href="#6-engineering-architecture">Engineering architecture</a>.</p>
+<p><strong>What the prototype demonstrates:</strong> An end-to-end software path, specific Google Cloud integrations, numerical comparison under an explicit change limit, human-reviewed release, and independently retrievable approved records. <strong>What it does not establish:</strong> Autonomous machine control, production-grade model reliability across all defects, or verified real-world factory cost savings.</p>
+<h2 id="1-why-this-problem-exists">1. Why this problem exists</h2>
+<h3 id="11-manufacturing-orders-do-not-all-behave-the-same">1.1 Manufacturing orders do not all behave the same</h3>
+<p>Corrugated packaging is produced to requirements that vary by order. Board construction, paper grades, grammage, flute combinations, ply structure, adhesives and downstream converting requirements alter the practical operating envelope. Conditions such as ambient humidity, paper moisture, roll temperature, drying and machine speed can further affect an individual production run. A plan that was reasonable for one material specification may need attention when the next order arrives.</p>
+<p>For a newcomer, <strong>GSM</strong> is paper mass per square metre; <strong>flute</strong> describes the corrugated wave structure; <strong>single facer</strong> refers to equipment used to bond a liner to a fluted medium in board manufacture; <strong>conversion</strong> covers downstream transformations toward finished packaging. These are background manufacturing definitions, not claims that the prototype automatically measures every variable.</p>
+<p>Every operating parameter interacts with others. A setting that seems cheaper in isolation may influence strength, warp, adhesion, printing or cracking risk. A production-preparation system must therefore consider trade-offs rather than optimize a single number without context.</p>
+<h3 id="12-why-the-cost-problem-is-bigger-than-scrap">1.2 Why the cost problem is bigger than scrap</h3>
+<p>Scrap is visible, but <strong>margin erosion can occur on boxes that are still shipped and sold</strong>. If an order has an agreed selling price, unplanned production expense reduces the margin even if the customer accepts every finished unit. Possible expense drivers include excess material, longer conversion time, additional changeovers, avoidable machine stops and quality-related rework.</p>
+<p>Conceptual economics (not observed factory results):</p>
+<p><strong>Contribution per order = revenue from accepted units − actual attributable production costs.</strong></p>
+<p>If revenue is contractually fixed while attributable cost increases, contribution decreases. A system that helps an operator choose a feasible, better-costed setup could potentially protect margin. That proposition must be evaluated against actual material consumption, throughput, acceptance and production costs before savings are claimed.</p>
+<p>The first Momentum prototype measures a narrower modeled dimension: predicted defect-related scrap cost plus an explicit heuristic slowdown allowance in a bounded setting search. It does <strong>not</strong> currently account for every element of a manufacturing plant's economics.</p>
+<h3 id="13-the-information-to-decision-gap">1.3 The information-to-decision gap</h3>
+<p>Plant context may be split across purchase orders, material catalogs, historical records, environmental observations, operator knowledge and separate quality logs. A conventional workflow can depend heavily on experienced personnel translating this information into machine settings. Such experience is valuable, but it can be difficult to reproduce, explain and compare consistently when conditions change.</p>
+<p>Momentum's initial question is not, “Can AI replace a production supervisor?” It is: <strong>Can confirmed inputs and constrained analysis make the supervisor's next decision more explicit, inspectable and repeatable?</strong></p>
+<h3 id="14-intended-beneficiaries">1.4 Intended beneficiaries</h3>
+<ul>
+<li><strong>Operators:</strong> More structured input review, fewer hidden assumptions, and a documented recommendation before a lot starts.</li>
+<li><strong>Supervisors:</strong> Explicit approval authority with an inspectable draft, assumptions, evidence and stored record.</li>
+<li><strong>Plant owners and planning teams:</strong> A route toward comparing modeled costs and, after validation, actual cost per accepted order.</li>
+<li><strong>Engineering and quality teams:</strong> Shared source context, historical comparisons and more reproducible explanations.</li>
+<li><strong>Sustainability stakeholders:</strong> A measurable <em>future</em> path to tracking resource use per accepted output; no realized environmental savings are yet demonstrated.</li>
+</ul>
+<h2 id="2-how-the-team-arrived-at-the-idea">2. How the team arrived at the idea</h2>
+<p>Momentum is built by <strong>Team Nucleas</strong>, led by Siddhant Oswal with Om Jain. The project combines software and AI engineering with <strong>direct operational access to a corrugated manufacturing environment through Om</strong>. That access matters because variables such as flute, paper specifications, adhesives, line conditions, operators and practical constraints cannot be treated as abstract prompt text alone.</p>
+<p>The team selected corrugated manufacturing as the initial domain rather than claiming one universal AI model can understand every factory. The first product boundary is deliberately <strong>pre-run preparation and supervisory review</strong>, not live autonomous control. This makes it possible to demonstrate a bounded system with a real product catalog, approved demo inputs, controlled model-based comparisons and persistent approved instructions.</p>
+<p>The source documentation supports access to a <strong>real 117-item plant catalog</strong> as the foundation for modeled production history. It does <strong>not</strong> support claims that the models were trained on measured multi-year factory telemetry, that external customers have adopted the product, or that a physical line has already achieved the projected reductions. Those are important distinctions for any technical reviewer.</p>
+<h3 id="the-design-choices-behind-the-prototype">The design choices behind the prototype</h3>
+<ol>
+<li><strong>Confirm the source before predicting:</strong> A model should not quietly assume an ambiguous order or incorrect catalog item.</li>
+<li><strong>Require operator confirmation:</strong> Actual preparation depends on current conditions and explicitly reviewed planned settings.</li>
+<li><strong>Separate language understanding from numerical comparison:</strong> Gemini is not the numerical cost optimizer.</li>
+<li><strong>Bound the possible changes:</strong> The reference search imposes a maximum of three setting changes.</li>
+<li><strong>Explain and record:</strong> Proposed changes and supporting evidence should survive beyond the immediate chat or screen.</li>
+<li><strong>Keep human authority:</strong> A stored draft is not automatically an approved production instruction.</li>
+</ol>
+<p>These principles are implemented to different degrees in the demonstrated system. The site describes what is evidenced, not an imagined future product.</p>
+<h2 id="3-what-momentum-does-today">3. What Momentum does today</h2>
+<h3 id="31-new-lot-the-core-preparation-journey">3.1 New Lot: the core preparation journey</h3>
+<p><strong>Step 1 — Choose an approved purchase order.</strong> The prototype serves approved PDF and JPEG demonstration inputs, including single-line, multiline, ambiguous and scanned cases. Input validation restricts accepted materials to the approved set. Uploaded-order handling is not evidence of unrestricted customer-file ingestion.</p>
+<p><strong>Step 2 — Extract and review source details.</strong> Vertex AI Gemini reads the approved PO and returns structured fields. The application validates required structure and resolves fields against catalog information. Ambiguity is surfaced for human review rather than silently accepted as a reliable production instruction.</p>
+<p><strong>Step 3 — Confirm order and catalog context.</strong> The operator verifies the chosen source line and material specification. The plant catalog includes <strong>117 actual catalog items</strong>; modeled lots and derived results must not be confused with recorded factory measurements.</p>
+<p><strong>Step 4 — Confirm current conditions.</strong> The interface captures conditions such as ambient humidity, temperature and paper moisture. For the prototype, these values can be manually entered or simulated. There is no continuous physical sensor integration for this workflow.</p>
+<p><strong>Step 5 — Confirm the planned settings.</strong> Seven planned levers appear in the reference workflow: line speed, roll temperature, gum application, gum viscosity, pasting pressure, drying time and print speed. The tool does not remotely set these values on production machinery.</p>
+<p><strong>Step 6 — Prepare the lot.</strong> The application calls numerical services to calculate the five modeled defect risks and compare allowed alternatives. This is a fixed workflow, not an open-ended autonomous agent selecting arbitrary tools.</p>
+<p><strong>Step 7 — Review risk and cost estimates.</strong> The output contains estimated risk values and a proposed settings comparison. Estimated cost depends on models and explicit assumptions; it is not a measurement of a completed manufacturing run.</p>
+<p><strong>Step 8 — Read the explanation.</strong> Gemini receives structured evidence, model drivers and comparable history. Validation checks are designed to reduce unsupported numbers and inappropriate causal claims. The evidence is inspectable, but an LLM explanation is not a scientific proof of causation.</p>
+<p><strong>Step 9 — Save a draft.</strong> Proposed results and source context enter a stored DRAFT state. Saving a draft does not confer production approval.</p>
+<p><strong>Step 10 — Supervisor review.</strong> A responsible reviewer examines the stored draft and decides whether to approve it. The prototype's demo-session identity is not equivalent to independently verified enterprise authentication.</p>
+<p><strong>Step 11 — Approve and generate the card.</strong> The application produces and stores an approved job-card PDF only through the approved lifecycle.</p>
+<p><strong>Step 12 — Retrieve the approved record.</strong> The approved record and stored PDF can be independently read back. The reference verification compared retrieved bytes and a stored hash.</p>
+<p><img src="images/production-conditions.jpg" alt="Actual application screenshot showing operator-confirmed production conditions and planned settings" /></p>
+<p><em>Authentic application screenshot from the submitted deck. Rendered locally using retained reference responses, not a fresh cloud execution at screenshot time.</em></p>
+<h3 id="32-defect-check-investigation-not-unattended-inspection">3.2 Defect Check: investigation, not unattended inspection</h3>
+<p>This workspace has two supporting modes:</p>
+<p><strong>Historical Evidence</strong> retrieves comparable source-history cases and context for investigating conditions and defects. Its value is to give operators a structured record to inspect, not to claim a causal laboratory conclusion from a correlation.</p>
+<p><strong>Photo Diagnosis</strong> operates on <strong>ten approved photo IDs</strong> in the demonstration scope. Historical classification labels matched seven out of ten images. This small approved-set result is <strong>not calibrated industrial inspection accuracy</strong>. The prototype does not promise arbitrary photo uploads or a working machine-vision camera line.</p>
+<h3 id="33-impact-modeled-evaluation">3.3 Impact: modeled evaluation</h3>
+<p>Impact displays historical and held-out modeled summaries, not verified monthly factory savings. It is a way to explore estimated trade-offs and the input assumptions behind them. No annualized profit figure or generalized percent reduction is supported by the current evidence.</p>
+<h3 id="34-why-these-workspaces-are-separate">3.4 Why these workspaces are separate</h3>
+<p>New Lot answers <strong>“What should we prepare and approve for this order?”</strong> Defect Check answers <strong>“What supporting cases or photo clues are available to investigate?”</strong> Impact answers <strong>“What do the modeled comparisons and history suggest across a wider set?”</strong> Keeping these distinct makes the limits of each output easier to understand.</p>
+<h2 id="4-example-one-reference-lot-one-bounded-comparison">4. Example: one reference lot, one bounded comparison</h2>
+<p>The project presents a particular <strong>reference case PKBX0041</strong>, a recycled <strong>5-ply BC</strong> board with <strong>1,300 boxes</strong> and manually confirmed conditions. The optimizer compared an entered setup with a recommended setup, while leaving specified other settings unchanged.</p>
+<table>
+<thead>
+<tr>
+  <th>Reference measure</th>
+  <th style="text-align:right">Entered setup</th>
+  <th style="text-align:right">Recommended setup</th>
+  <th>Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Modeled scrap mass</td>
+  <td style="text-align:right">100.4 kg</td>
+  <td style="text-align:right">83.0 kg</td>
+  <td>17.4 kg lower estimated scrap mass</td>
+</tr>
+<tr>
+  <td>Modeled scrap cost</td>
+  <td style="text-align:right">₹5,351</td>
+  <td style="text-align:right">₹4,426</td>
+  <td>₹925 lower modeled scrap cost</td>
+</tr>
+<tr>
+  <td>Roll temperature</td>
+  <td style="text-align:right">162°C</td>
+  <td style="text-align:right">170°C</td>
+  <td>One proposed setting change</td>
+</tr>
+<tr>
+  <td>Gum application</td>
+  <td style="text-align:right">HIGH</td>
+  <td style="text-align:right">MEDIUM</td>
+  <td>One proposed setting change</td>
+</tr>
+<tr>
+  <td>Gum viscosity</td>
+  <td style="text-align:right">32s</td>
+  <td style="text-align:right">35s</td>
+  <td>One proposed setting change</td>
+</tr>
+</tbody>
+</table>
+<p>The displayed reference compares <strong>three setting changes</strong>, within the configured maximum. Other reference settings, including speed, pressure and drying as documented in the deck, are unchanged. The quantitative example is deliberately scoped: it is a <strong>modeled reference result</strong>, not a real production trial, audited cost saving, or proof that these settings are universally correct.</p>
+<p><img src="images/reference-result.png" alt="Slide visual showing the modeled reference-lot comparison" /></p>
+<h3 id="what-this-result-does-and-does-not-prove">What this result does and does not prove</h3>
+<p>The result <strong>illustrates that the system can score alternatives under constraints</strong> and produce an interpretable candidate. It does not mean all settings are optimal on a real factory line. Before using these recommendations operationally, the operator must verify machine-specific safe ranges and the plant must compare actual outcomes against an appropriate baseline.</p>
+<p>The bigger commercial opportunity lies in avoiding controllable production costs on <strong>sellable output</strong>, not only scrap. That opportunity is the reason for building Momentum, but the reference case does not quantify it in full.</p>
+<h2 id="5-ai-and-numerical-intelligence-what-each-component-does">5. AI and numerical intelligence: what each component does</h2>
+<h3 id="51-vertex-ai-gemini-language-extraction-and-explanation">5.1 Vertex AI Gemini: language, extraction and explanation</h3>
+<p>Gemini is used to process supported PO inputs, structure extracted information, explain the chosen recommendation using supplied data, and support limited approved-image classification. The slide-level technology snapshot records <strong>six Gemini calls</strong> for the referenced demonstration. Gemini does not directly choose unconstrained production settings or exercise final approval authority.</p>
+<p>The design separates language understanding from numerical truth. Structured extraction needs verification against the actual input and catalog. Narrative explanation is checked against supplied evidence and should not introduce unsupported financial or causal claims.</p>
+<h3 id="52-bigquery-ml-five-modeled-defect-risks">5.2 BigQuery ML: five modeled defect risks</h3>
+<p>The reference model family estimates risks associated with:</p>
+<ul>
+<li><strong>Warp:</strong> board shape distortion or undesirable curvature.</li>
+<li><strong>Delamination:</strong> loss of bond between layers.</li>
+<li><strong>Strength:</strong> inadequate modeled strength-related characteristics.</li>
+<li><strong>Print:</strong> printing-quality issues.</li>
+<li><strong>Crack:</strong> cracking-related behavior, with a documented low-confidence monsoon limitation.</li>
+</ul>
+<p>These categories represent <strong>model scope</strong>. They are not an observed distribution of defects at the factory. The source system's historical training table is a modeled production history derived from a real item master, not a measurement collection from installed sensors.</p>
+<h3 id="53-bounded-setting-comparison">5.3 Bounded setting comparison</h3>
+<p>The recorded reference optimizer uses a finite BigQuery SQL candidate search, evaluating <strong>8,640 candidate combinations</strong> in the example grid, with <strong>at most three changes</strong> allowed. The scoring takes predicted scrap cost and a heuristic slowdown allowance into account. The presence of a numeric objective and a bounded search is useful engineering evidence, but it does not establish a global optimum across the entire manufacturing operation.</p>
+<p>The five risk outcomes can conflict. In the reference slide, modeled strength risk increases slightly by <strong>0.078 percentage points</strong> while the overall modeled cost objective improves. A valid explanation must reveal that trade-off instead of claiming every defect risk improves at once.</p>
+<p><img src="images/optimization-chart.png" alt="Chart of modeled risk comparison and constrained recommendation" /></p>
+<h3 id="54-explanation-with-inspectable-context">5.4 Explanation with inspectable context</h3>
+<p>The reference WARP explanation exposes statistical attribution and comparable historical records. The deck shows example contributions including <strong>humidity +0.751 percentage points</strong>, <strong>drying +0.162</strong>, and <strong>gum −0.137</strong> to the modeled WARP contribution. A negative contribution is modeled as lowering that particular risk attribution; it does <strong>not</strong> demonstrate measured adhesive consumption or automatically prove causation.</p>
+<p>The application can supply up to five comparable source-history records for context, and it distinguishes numbers, reported drivers and causality language. A reviewer can trace the narrative to evidence more readily than if Gemini were free to invent an explanation.</p>
+<p><img src="images/attribution-chart.png" alt="Example model attribution and explanation evidence" /></p>
+<h3 id="55-what-the-system-is-not">5.5 What the system is not</h3>
+<p>Momentum is <strong>not</strong> an unrestricted chatbot that decides factory settings from natural-language prompts alone. It is <strong>not</strong> an autonomous factory controller or a complete enterprise resource planning system. The demonstrated numerical search is narrower than whole-plant, finite-capacity production scheduling. It is an AI-assisted preparation and review workflow with defined service responsibilities and explicit operating limits.</p>
+<h2 id="6-engineering-architecture">6. Engineering architecture</h2>
+<p>Momentum is implemented as a web application on <strong>Google Cloud Run</strong>, using <strong>Node.js</strong> and <strong>Hono</strong> for server workflow logic. Its architecture assigns distinct responsibilities to managed services instead of asking one model to handle everything.</p>
+<table>
+<thead>
+<tr>
+  <th>Component</th>
+  <th>Role in the recorded application</th>
+  <th>Boundary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Cloud Run</td>
+  <td>Hosts the web application and service workflow</td>
+  <td>Maximum two instances in the documented deployment</td>
+</tr>
+<tr>
+  <td>Vertex AI Gemini</td>
+  <td>Approved PO extraction, grounded explanation, supported photo task</td>
+  <td>Provider attempts are metered and bounded</td>
+</tr>
+<tr>
+  <td>BigQuery</td>
+  <td>117-item catalog, modeled history, evidence, DRAFTs, audit, numerical SQL</td>
+  <td>Stored data must not be confused with observed production outcomes</td>
+</tr>
+<tr>
+  <td>BigQuery ML</td>
+  <td>Five defect models and evaluated model resources</td>
+  <td>Predictive fit is not established on measured factory outcomes</td>
+</tr>
+<tr>
+  <td>Cloud Storage</td>
+  <td>Approved inputs, photo objects and PDF job cards</td>
+  <td>Application controls restrict accepted inputs</td>
+</tr>
+<tr>
+  <td>Firestore</td>
+  <td>Shared Gemini attempt counter</td>
+  <td>100 attempted calls per Asia/Kolkata day in documented prototype quota</td>
+</tr>
+<tr>
+  <td>Secret Manager</td>
+  <td>Provisions demo-session signing key</td>
+  <td>Demo session is not enterprise identity verification</td>
+</tr>
+<tr>
+  <td>Pub/Sub</td>
+  <td>Separately tested simulated ingestion into BigQuery</td>
+  <td>No physical sensor or camera integration</td>
+</tr>
+<tr>
+  <td>Cloud Build / Artifact Registry / Docker</td>
+  <td>Build and delivery infrastructure</td>
+  <td>Deployment mechanics, not a plant-performance metric</td>
+</tr>
+<tr>
+  <td>Cloud Logging</td>
+  <td>Operational logging</td>
+  <td>Does not independently establish security certification</td>
+</tr>
+<tr>
+  <td>Zod / PDFKit / Playwright / Node test runner</td>
+  <td>Schema validation, PDF generation, UI and programmatic testing</td>
+  <td>Checks are scoped to implemented test cases</td>
+</tr>
+<tr>
+  <td>Gemini TTS in Vertex AI Studio</td>
+  <td>More than two minutes of narration for the demo video</td>
+  <td><strong>Demo-production tool only</strong>, not Momentum runtime</td>
+</tr>
+</tbody>
+</table>
+<p><img src="images/architecture-slide.png" alt="Google Cloud architecture diagram from the presentation" /></p>
+<h3 id="61-request-and-approval-phases">6.1 Request and approval phases</h3>
+<p>The technical sequence in the deck shows the preparation path: review an approved order, store the input, reserve a provider attempt, call Gemini, resolve a catalog item, obtain the reviewed fields, prepare a job, run predictions and comparisons, reserve the explanation attempt, generate the supplied-evidence explanation, persist the matching draft, and read it back. Approval and PDF retrieval are a <strong>separate lifecycle</strong>.</p>
+<p>That separation matters. Text generation alone is not permission to release a manufacturing instruction. The application requires a persisted draft and an explicit approval state before returning a stored approved PDF.</p>
+<h3 id="62-what-the-usage-counts-mean">6.2 What the usage counts mean</h3>
+<p>The technologies slide provides one measured demonstration snapshot, including <strong>six Gemini calls</strong>, <strong>30 BigQuery queries</strong>, roughly <strong>200 MiB scanned</strong>, <strong>five BigQuery ML models</strong>, one live Cloud Run service, a <strong>17 KB</strong> stored PDF job card, <strong>8 / 100</strong> counted Gemini calls at the captured time, and one verified simulated Pub/Sub event. These figures describe <strong>activity during a particular demonstration</strong>, not guaranteed ongoing throughput, scalability or accuracy.</p>
+<p>The stored reference PDF was <strong>16,994 bytes</strong>, consistent with the rounded 17 KB presentation label.</p>
+<h3 id="63-why-the-implementation-uses-bounded-responsibilities">6.3 Why the implementation uses bounded responsibilities</h3>
+<p>Gemini is useful for messy language and readable explanations; BigQuery ML and SQL are used for repeatable numeric outputs; application validation and state transitions enforce the review boundary; managed storage preserves approved results. The combined system gives a technical judge specific components and evidence to inspect. It is more constrained than an LLM-only demonstration, although engineering quality still depends on actual tests and operational verification.</p>
+<h2 id="7-responsible-use-controls-and-what-is-not-claimed">7. Responsible use, controls and what is not claimed</h2>
+<p>Momentum handles inputs and recommendations that could affect physical manufacturing operations. The prototype therefore treats <strong>data confirmation, bounded decisions and human approval</strong> as essential product behavior, not merely a legal disclaimer.</p>
+<p><strong>Documented controls:</strong> approved-input allowlists, TEST-only writes, request-size checks, structured validation, demo-session ownership, same-origin mutation checks, provider-attempt metering, an approval lifecycle, audit records and durable card retrieval. These are described in the public repository documentation; they are <strong>not</strong> equivalent to an independent security penetration test or certified access-control deployment.</p>
+<p><strong>Human-in-the-loop boundary:</strong> Operators confirm source details and conditions; supervisors authorize release of the reviewed card. The software does not issue commands to industrial controllers or actuate machines.</p>
+<p><strong>Uncertainty and explanation:</strong> Numerical outputs are modeled estimates. Correlations and attribution do not prove cause-and-effect. The prototype discloses low-confidence CRACK prediction in monsoon conditions. The system must not imply that human approval converts inaccurate data into accurate data.</p>
+<p><strong>Identity boundary:</strong> The deployed demo uses a selected application-session approach. The repository explicitly states that this is not independently verified enterprise identity. Firebase is described as a separate future role-based access direction, not something the current demo depends upon for verified human identity.</p>
+<p><strong>Privacy boundary:</strong> The public knowledge bank intentionally excludes personal factory production orders, plant identity, credentials, environment variables and operational secrets. Publishing a source repository and demo must not be interpreted as permission to publish proprietary customer records.</p>
+<p><strong>Runtime and cost:</strong> Cloud Run is configured with at most two instances, and Gemini calls have a shared attempted-call limit of 100 per Asia/Kolkata day. Failed or ambiguous provider attempts count. A ₹5,000 budget notification is an alert, <strong>not</strong> an automatic spending cap. Users should not interpret a displayed counter as an SLA.</p>
+<p><strong>Durability limits:</strong> Approved jobs and PDF cards persist, but PO-review, trace and coordination state can be process-local. Cross-instance replay can require extraction again; the current documentation does not claim global exactly-once processing.</p>
+<h2 id="8-testing-and-performance-evidence">8. Testing and performance evidence</h2>
+<h3 id="81-application-workflow-evidence">8.1 Application workflow evidence</h3>
+<p>The recorded reference acceptance on <strong>16 October 2026</strong> documents <strong>43 passing checks and two retained failures</strong> for the private reference journey. The test path reached approved-card creation and independent retrieval of the stored approval record and PDF. A separate public release suite showed <strong>27/27 checks passing</strong> around navigation, evidence views, browser paths and refusal controls. The retained failures included a harness error and a cross-instance replay issue.</p>
+<p>These outcomes verify aspects of <strong>application behavior</strong>, not predictive-model accuracy. A passing UI or PDF retrieval test is not evidence that a defect-risk model will perform well on real factory production.</p>
+<p><img src="images/workflow-evidence.png" alt="Recorded reference-workflow and public-release checks" /></p>
+<h3 id="82-model-evaluation-internal-split-and-separate-holdout">8.2 Model evaluation: internal split and separate holdout</h3>
+<p>The repository retains acceptance thresholds for five models and records an internal split where R² values meet the stored thresholds. However, <strong>the original internal split's sample count and exact membership are no longer recoverable</strong>, and therefore those internal metrics do not provide fully reconstructible validation evidence.</p>
+<p>A separate, independently counted <strong>September 2026 holdout of 219 modeled lots</strong> produced the following R² results:</p>
+<table>
+<thead>
+<tr>
+  <th>Modeled defect</th>
+  <th style="text-align:right">Recorded R² threshold</th>
+  <th style="text-align:right">September holdout R²</th>
+  <th>Clears threshold?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>WARP</td>
+  <td style="text-align:right">0.60</td>
+  <td style="text-align:right">0.4021</td>
+  <td>No</td>
+</tr>
+<tr>
+  <td>DELAM</td>
+  <td style="text-align:right">0.60</td>
+  <td style="text-align:right">0.5003</td>
+  <td>No</td>
+</tr>
+<tr>
+  <td>STRENGTH</td>
+  <td style="text-align:right">0.45</td>
+  <td style="text-align:right">0.2971</td>
+  <td>No</td>
+</tr>
+<tr>
+  <td>PRINT</td>
+  <td style="text-align:right">0.60</td>
+  <td style="text-align:right">0.6102</td>
+  <td><strong>Yes</strong></td>
+</tr>
+<tr>
+  <td>CRACK</td>
+  <td style="text-align:right">0.30</td>
+  <td style="text-align:right">−0.0136</td>
+  <td>No</td>
+</tr>
+</tbody>
+</table>
+<p>R² is a regression-fit measure; it is <strong>not</strong> a direct percentage of correct defect classifications. A negative R² means worse fit than a baseline that predicts the holdout's mean. The September holdout clears only PRINT's stated threshold; CRACK has negative R² and is specifically disclosed as low confidence in monsoon conditions.</p>
+<p>The founders accepted the existing models <strong>for a supervised hackathon prototype under a documented exception</strong>, without claiming that this acceptance proves autonomous industrial readiness. This is an engineering boundary, not a reason to hide adverse observations.</p>
+<h3 id="83-why-the-submitted-slide-summarizes-readiness">8.3 Why the submitted slide summarizes readiness</h3>
+<p>The presentation groups evidence into <strong>what works, what was tested, and what comes next</strong> so a reviewer can find the operative conclusion quickly. The detailed R² values remain here and in the public model-acceptance configuration. This keeps the main slide readable without withholding the technical data from anyone who needs it.</p>
+<p><img src="images/prototype-readiness.png" alt="Readiness summary used in the deck" /></p>
+<h3 id="84-evidence-status-summary">8.4 Evidence status summary</h3>
+<table>
+<thead>
+<tr>
+  <th>Statement</th>
+  <th>Status</th>
+  <th>Appropriate interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Application has a working supervised preparation workflow</td>
+  <td>Demonstrated in recorded tests</td>
+  <td>Functionality scoped to recorded cases</td>
+</tr>
+<tr>
+  <td>Approved PDF card and record were retrieved</td>
+  <td>Demonstrated</td>
+  <td>Persistence and retrieval shown in reference run</td>
+</tr>
+<tr>
+  <td>Five defect-risk models exist</td>
+  <td>Implemented</td>
+  <td>Their real-world predictive utility is not established</td>
+</tr>
+<tr>
+  <td>₹925 less scrap cost on reference lot</td>
+  <td><strong>Modeled</strong></td>
+  <td>Not realized or audited factory savings</td>
+</tr>
+<tr>
+  <td>One simulated Pub/Sub event was read back</td>
+  <td>Demonstrated in isolated test</td>
+  <td>No live industrial telemetry claimed</td>
+</tr>
+<tr>
+  <td>Photo classification matched 7/10 approved examples</td>
+  <td>Recorded limited test</td>
+  <td>Not calibrated inspection accuracy</td>
+</tr>
+<tr>
+  <td>Physical sensor streaming or machine actuation</td>
+  <td>Not implemented</td>
+  <td>Future direction only</td>
+</tr>
+<tr>
+  <td>Measured reduction in production costs</td>
+  <td>Not established</td>
+  <td>Requires plant trials with actual records</td>
+</tr>
+</tbody>
+</table>
+<h2 id="9-what-differentiates-momentum">9. What differentiates Momentum</h2>
+<p>This section describes a <strong>workflow distinction</strong>, not a measured head-to-head victory over a named competitor.</p>
+<table>
+<thead>
+<tr>
+  <th>Ordinary preparation challenge</th>
+  <th>Momentum's demonstrated response</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Order details may be scattered or ambiguous</td>
+  <td>Structured extraction plus operator review and catalog matching</td>
+</tr>
+<tr>
+  <td>Settings may be chosen from remembered practice alone</td>
+  <td>Candidate comparison across modeled risks and cost assumptions</td>
+</tr>
+<tr>
+  <td>A cost improvement may worsen another quality dimension</td>
+  <td>Explicit bounded trade-off under a three-change limit</td>
+</tr>
+<tr>
+  <td>Recommendations can be difficult to explain</td>
+  <td>Supplied-evidence explanation with inspectable model context</td>
+</tr>
+<tr>
+  <td>A recommendation can look like an authorization</td>
+  <td>Separate DRAFT and APPROVED states with reviewer intervention</td>
+</tr>
+<tr>
+  <td>Final settings can be lost in transient discussions</td>
+  <td>Stored, retrievable approved PDF job card</td>
+</tr>
+</tbody>
+</table>
+<p>The distinctive proposition is not “we use Gemini.” It is the <strong>chain from confirmed industrial context to constrained comparison, explainable review and approved durable instruction</strong>. This is a credible workflow USP for the prototype. It is not evidence that no manufacturing-planning product elsewhere has similar features.</p>
+<h3 id="a-useful-scenario-for-technical-evaluation">A useful scenario for technical evaluation</h3>
+<p>A lower modeled cost setting can increase a quality risk or violate an allowed change bound. Momentum's numeric comparison should make the competing values visible rather than announce an unexplained “best” option. The reference example already shows a positive model-risk trade-off in STRENGTH while modeled total cost improves. A broader autonomous refusal system should not be claimed unless its exact implementation and test evidence are provided.</p>
+<h2 id="10-sustainability-and-social-usefulness">10. Sustainability and social usefulness</h2>
+<p>Momentum is entered under Sustainability while addressing the manufacturing intelligent-operations challenge. The plausible environmental mechanism is <strong>improved resource use per accepted output</strong>, potentially reducing unnecessary material consumption, rework and avoidable operating time. But those benefits are <strong>hypotheses</strong>, not established outcomes from the prototype.</p>
+<p>A valid future impact evaluation should measure material consumed per accepted box or order, accepted-unit yield, rework, energy consumption where metered, production duration, actual cost per accepted order, and quality acceptance. Any claims about kilograms of avoided waste or carbon impacts should be calculated only from observed data and documented conversion assumptions.</p>
+<p>The social and operational contribution is better information for workers and supervisors, not removing human expertise. The product should make reasons and uncertainty visible so human decisions remain accountable.</p>
+<h2 id="11-roadmap-and-scalability">11. Roadmap and scalability</h2>
+<p>The public roadmap is <strong>ordered by validation</strong>, not by speculative dates or adoption claims.</p>
+<p><strong>Milestone 1 — Validate one plant:</strong> Compare modeled recommendations with measured outcomes, gather operator feedback, improve model calibration and assess whether cost improvements preserve quality and throughput.</p>
+<p><strong>Milestone 2 — Strengthen operating controls:</strong> Revisit process-local state, cross-instance recovery, independently verified identity, role-based permissions and durable auditability where appropriate.</p>
+<p><strong>Milestone 3 — Repeat for another line or plant:</strong> Define a configuration contract for each factory's machine ranges, materials, catalog mappings, data quality, operational constraints and required review roles. Demonstrate repeatability before claiming multi-site readiness.</p>
+<p><strong>Milestone 4 — Broaden functionality carefully:</strong> Additional languages, workflow assistant, human escalation and supported monitoring integrations can improve usability if backed by implementation and validation.</p>
+<p><strong>Milestone 5 — Consider adjacent manufacturing sectors:</strong> Only after the planning boundary, data contracts and operator-validation process are repeatable. A corrugated prototype is not automatically a universal industrial optimizer.</p>
+<p>Scalability has two distinct meanings. <strong>Cloud service scalability</strong> concerns infrastructure handling more users or calls. <strong>Industrial rollout scalability</strong> concerns onboarding a new factory with trustworthy data and local constraints. The current deck demonstrates a managed cloud implementation and outlines, but does not yet prove, the latter.</p>
+<h2 id="12-screenshots-and-visual-evidence-gallery">12. Screenshots and visual evidence gallery</h2>
+<p>All screenshots below come from the submitted presentation. Their source descriptions and caveats are kept in the captions. They should never be relabeled as measured factory outcomes.</p>
+<h3 id="confirm-production-inputs-before-analysis">Confirm production inputs before analysis</h3>
+<p><img src="images/production-conditions.jpg" alt="Operator input and condition confirmation screen" /></p>
+<p><em>The operator reviews production conditions and seven planned settings. Locally rendered application UI with retained reference responses.</em></p>
+<h3 id="examine-five-modeled-risks">Examine five modeled risks</h3>
+<p><img src="images/five-risk-summary.png" alt="Five-risk summary shown in the prototype UI" /></p>
+<p><em>Model estimates, not a measured defect distribution.</em></p>
+<h3 id="compare-proposed-setup-and-evidence">Compare proposed setup and evidence</h3>
+<p><img src="images/recommendation-review.png" alt="Recommendation review shown in the prototype UI" /></p>
+<p><em>Bounded proposed settings and review context. No autonomous machinery control.</em></p>
+<h3 id="persist-a-draft-separately-from-approval">Persist a draft separately from approval</h3>
+<p><img src="images/saved-draft.jpg" alt="Saved draft state" /></p>
+<p><em>A persisted DRAFT is not an approved manufacturing instruction.</em></p>
+<h3 id="approve-and-retrieve-the-final-card">Approve and retrieve the final card</h3>
+<p><img src="images/approved-record.jpg" alt="Approved record state" /></p>
+<p><em>The approved state is part of a controlled reference workflow.</em></p>
+<h3 id="independently-verify-the-recorded-output">Independently verify the recorded output</h3>
+<p><img src="images/approved-job-card.png" alt="Approved PDF job card reference screenshot" /></p>
+<p><em>Reference journey: a two-page, 16,994-byte card with matching retrieval hash.</em></p>
+<h2 id="13-frequently-asked-questions">13. Frequently asked questions</h2>
+<h3 id="why-call-it-industrial-intelligence-rather-than-a-defect-detector">Why call it industrial intelligence rather than a defect detector?</h3>
+<p>Because the product begins before the run, connects order context and settings, compares modeled quality/cost trade-offs, and ends with an approved instruction. Defect-related models are components, not the entire workflow.</p>
+<h3 id="what-does-pre-run-mean">What does “pre-run” mean?</h3>
+<p>The planning and review stage before a production lot is executed. Momentum currently recommends and records decisions; it does not actuate machinery.</p>
+<h3 id="why-corrugated-manufacturing">Why corrugated manufacturing?</h3>
+<p>The team has direct practical exposure through Om and access to a real product catalog, allowing a better-bounded initial case than a generic cross-industry AI idea.</p>
+<h3 id="is-the-site-describing-a-deployed-product-or-just-a-mockup">Is the site describing a deployed product or just a mockup?</h3>
+<p>A Cloud Run application and controlled approval/retrieval journey are documented. Some screenshots are locally rendered using retained responses. Model predictions and factory value are not independently validated.</p>
+<h3 id="are-the-117-catalog-items-real">Are the 117 catalog items real?</h3>
+<p>The project documentation says yes: the item master comes from a real plant. The history used for training and analysis is modeled, not actual long-term recorded production telemetry.</p>
+<h3 id="does-gemini-run-the-optimizer">Does Gemini run the optimizer?</h3>
+<p>No. Gemini handles structured-language tasks and grounded explanation. BigQuery ML and SQL supply numerical prediction and candidate comparison. Application code manages validation and approval states.</p>
+<h3 id="why-not-just-ask-a-general-purpose-llm-for-machine-settings">Why not just ask a general-purpose LLM for machine settings?</h3>
+<p>An unconstrained answer cannot be assumed to respect machine ranges, catalog facts, numerical trade-offs, source uncertainty or approval semantics. Momentum uses more explicit structure, although the prototype still requires independent validation.</p>
+<h3 id="is-the-optimizer-or-tools-cp-sat">Is the optimizer OR-Tools CP-SAT?</h3>
+<p>The documented <strong>current</strong> reference run uses a finite <strong>BigQuery SQL candidate search</strong> with explicit change limits. Do not advertise CP-SAT as the production method unless current code and evidence show that implementation.</p>
+<h3 id="what-is-the-three-change-constraint">What is the three-change constraint?</h3>
+<p>The reference optimizer is permitted to recommend at most three differences from the entered setup. This bounds the scope of a proposed intervention, but it does not prove physical safety or a global optimum.</p>
+<h3 id="what-defects-are-modeled">What defects are modeled?</h3>
+<p>WARP, DELAM, STRENGTH, PRINT and CRACK.</p>
+<h3 id="are-the-model-outputs-accurate-enough-for-live-autonomous-production">Are the model outputs accurate enough for live autonomous production?</h3>
+<p>No such assurance is supported. The holdout misses the recorded threshold for four of five models; the system is a supervised prototype.</p>
+<h3 id="what-does-a-negative-crack-r-imply">What does a negative CRACK R² imply?</h3>
+<p>On the reported independent holdout it fits worse than the mean-prediction baseline. This is why confidence is explicitly limited in monsoon context.</p>
+<h3 id="why-do-the-internal-split-and-september-holdout-differ">Why do the internal split and September holdout differ?</h3>
+<p>They are different evaluation samples. Internal split metrics met thresholds, but original split membership/counts are unrecoverable. The later independent September holdout is counted and more cautionary.</p>
+<h3 id="does-the-925-figure-represent-money-the-factory-actually-saved">Does the ₹925 figure represent money the factory actually saved?</h3>
+<p>No. It is a <strong>modeled reference-lot scrap-cost reduction</strong>, not an observed monetary gain.</p>
+<h3 id="why-discuss-margins-if-the-quantified-result-is-scrap">Why discuss margins if the quantified result is scrap?</h3>
+<p>The real business problem includes excess manufacturing cost on sellable boxes. The prototype currently illustrates only part of that economic opportunity, with larger measures still requiring field data.</p>
+<h3 id="what-if-a-cheaper-setting-slightly-increases-one-modeled-quality-risk">What if a cheaper setting slightly increases one modeled quality risk?</h3>
+<p>That trade-off should be visible and considered before approval. The reference strength prediction increases by 0.078 percentage points while modeled total cost improves.</p>
+<h3 id="are-explanations-causal">Are explanations causal?</h3>
+<p>No. Statistical attribution and historical comparisons describe model associations; they do not independently prove causal relationships.</p>
+<h3 id="who-has-final-authority">Who has final authority?</h3>
+<p>A supervisor in the reviewed job-card workflow. The demo-session mechanism is not equivalent to verified corporate identity.</p>
+<h3 id="can-an-operator-edit-an-ambiguous-purchase-order">Can an operator edit an ambiguous purchase order?</h3>
+<p>The workflow returns to review and confirmation rather than treating ambiguous extraction as unquestioned truth.</p>
+<h3 id="is-every-po-upload-supported">Is every PO upload supported?</h3>
+<p>No. The hackathon prototype restricts demo inputs to approved purchase-order fixtures and validates against allowlists.</p>
+<h3 id="what-does-draft-mean">What does DRAFT mean?</h3>
+<p>A persisted recommendation awaiting review. It is not released as an approved manufacturing instruction.</p>
+<h3 id="what-does-approved-mean">What does APPROVED mean?</h3>
+<p>The application's recorded approval state, after review, from which the stored approved PDF can be retrieved.</p>
+<h3 id="are-approved-pdfs-durable">Are approved PDFs durable?</h3>
+<p>The reference workflow independently read back stored approved records and the PDF object. This is scoped evidence of persistence; cross-instance exactly-once handling is not claimed.</p>
+<h3 id="what-happens-if-cloud-run-switches-instances-mid-workflow">What happens if Cloud Run switches instances mid-workflow?</h3>
+<p>Some review and trace state is process-local and may need reconstruction or re-extraction. The repository explicitly records this limitation.</p>
+<h3 id="is-there-live-machine-telemetry">Is there live machine telemetry?</h3>
+<p>No. The demonstrated Pub/Sub event is a separate simulation and not physical sensor integration.</p>
+<h3 id="can-momentum-diagnose-any-uploaded-factory-photo">Can Momentum diagnose any uploaded factory photo?</h3>
+<p>No. The photo experience is limited to ten approved IDs; seven historical labels matched. This is not calibrated inspection accuracy.</p>
+<h3 id="are-annual-savings-shown">Are annual savings shown?</h3>
+<p>No verified annualized factory savings are established. The Impact workspace describes modeled comparisons.</p>
+<h3 id="what-about-environmental-benefits">What about environmental benefits?</h3>
+<p>Better resource efficiency is a plausible objective, but measured material, energy and emissions outcomes are future validation tasks.</p>
+<h3 id="why-google-cloud">Why Google Cloud?</h3>
+<p>It separates language AI, structured data, numeric models, application orchestration, metering and durable files into identifiable managed components. This makes the integration and evidence visible to technical reviewers.</p>
+<h3 id="how-many-gemini-calls-can-the-demo-make">How many Gemini calls can the demo make?</h3>
+<p>The documented quota is 100 attempted calls per Asia/Kolkata day, with shared Firestore metering. Failed or ambiguous attempts count.</p>
+<h3 id="does-the-5000-budget-alert-guarantee-that-spending-stops-there">Does the ₹5,000 budget alert guarantee that spending stops there?</h3>
+<p>No. It is a notification, not a hard cap.</p>
+<h3 id="why-is-gemini-tts-listed-under-tools">Why is Gemini TTS listed under tools?</h3>
+<p>It was used to generate demo-video narration (more than two minutes); it is not a runtime dependency of Momentum.</p>
+<h3 id="how-does-this-differ-from-an-erp-or-mes">How does this differ from an ERP or MES?</h3>
+<p>Momentum is a narrow pre-run preparation and supervisor-approval prototype. It is not presented as a replacement for comprehensive enterprise planning, execution or industrial controls.</p>
+<h3 id="does-passing-43-checks-prove-model-accuracy">Does passing 43 checks prove model accuracy?</h3>
+<p>No. The recorded checks concern the software workflow. Predictive validation is a separate question.</p>
+<h3 id="why-were-two-failures-retained-in-the-reporting">Why were two failures retained in the reporting?</h3>
+<p>The accepted test evidence recorded a harness error and cross-instance replay limitation. The project documents them rather than claiming a clean production-readiness result.</p>
+<h3 id="is-the-demo-using-private-plant-records">Is the demo using private plant records?</h3>
+<p>The published references use approved inputs and a real item master underlying modeled history. The public site should not expose private customer orders or sensitive plant details.</p>
+<h3 id="what-evidence-should-judges-inspect-first">What evidence should judges inspect first?</h3>
+<p>Start with Slides 3–6 for problem and solution, Slides 12–13 for architecture and tools, Slides 15–18 for the application, Slides 19–22 for numeric reasoning and tests, then the public repository's README and model-acceptance configuration.</p>
+<h3 id="what-happens-after-the-hackathon">What happens after the hackathon?</h3>
+<p>The next credible milestone is comparison against measured production outcomes and stronger predictive validation. Further controls, identity, sensor integration and multi-plant deployment remain future work.</p>
+<h2 id="14-glossary">14. Glossary</h2>
+<table>
+<thead>
+<tr>
+  <th>Term</th>
+  <th>Meaning in this knowledge bank</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>PO</td>
+  <td>Purchase order, the approved source document entering the reference workflow</td>
+</tr>
+<tr>
+  <td>GSM</td>
+  <td>Grams per square metre, a paper grammage measure</td>
+</tr>
+<tr>
+  <td>Flute</td>
+  <td>Corrugated wave profile forming part of the board construction</td>
+</tr>
+<tr>
+  <td>Lot</td>
+  <td>The order/run context being prepared and reviewed</td>
+</tr>
+<tr>
+  <td>Five risk models</td>
+  <td>BigQuery ML models for warp, delamination, strength, print and crack</td>
+</tr>
+<tr>
+  <td>R²</td>
+  <td>Regression-fit statistic, not classification accuracy percentage</td>
+</tr>
+<tr>
+  <td>Modeled</td>
+  <td>Based on simulated history or mathematical predictions, not direct observed savings</td>
+</tr>
+<tr>
+  <td>Candidate search</td>
+  <td>Evaluating bounded possible machine-setting combinations under an objective</td>
+</tr>
+<tr>
+  <td>DRAFT</td>
+  <td>Stored proposal awaiting reviewer approval</td>
+</tr>
+<tr>
+  <td>APPROVED</td>
+  <td>Recorded approved state enabling retrieval of stored job-card PDF</td>
+</tr>
+<tr>
+  <td>Job card</td>
+  <td>Reviewed production-preparation instruction artifact</td>
+</tr>
+<tr>
+  <td>Holdout</td>
+  <td>Evaluation sample not used in the training comparison described</td>
+</tr>
+<tr>
+  <td>Model attribution</td>
+  <td>A decomposition of reported model contribution, not proof of causality</td>
+</tr>
+<tr>
+  <td>Cloud Run</td>
+  <td>Google Cloud managed container runtime hosting the prototype application</td>
+</tr>
+<tr>
+  <td>Pub/Sub</td>
+  <td>Messaging system, used here for a separate simulated ingestion test</td>
+</tr>
+<tr>
+  <td>Human-in-the-loop</td>
+  <td>Explicit operator input and supervisor authorization in the workflow</td>
+</tr>
+</tbody>
+</table>
+<h2 id="15-source-register-and-evidence-links">15. Source register and evidence links</h2>
+<p>The following references are public and should remain visible from the published site. Do not replace these links with generic citations or invented bibliography entries.</p>
+<ol>
+<li><a href="https://github.com/SiddhantOswal/Momentum">Momentum public GitHub repository</a> — product overview, implementation boundaries and setup.</li>
+<li><a href="https://github.com/SiddhantOswal/Momentum/blob/main/README.md">Root README</a> — working application, reference case, product scope and safeguards.</li>
+<li><a href="https://github.com/SiddhantOswal/Momentum/blob/main/docs/README.md">Repository guide</a> — deployment, approved samples, testing, lifecycle and model-evidence limitations.</li>
+<li><a href="https://github.com/SiddhantOswal/Momentum/blob/main/config/model-acceptance.json">Model acceptance configuration</a> — exact thresholds, internal evaluation and September holdout, versions and owner exception.</li>
+<li><a href="https://github.com/SiddhantOswal/Momentum/tree/main/public/samples">Approved demonstration fixtures</a> — restricted sample POs, not open-ended customer input.</li>
+<li><a href="https://momentum-514663464609.asia-south1.run.app/">Deployed Momentum application</a> — current public entry point; user sessions and provider quotas may apply.</li>
+<li><strong>Momentum AI Builder Cup pitch:</strong> link the approved public PDF here after it has been published. No public presentation URL was supplied when this reference was prepared.</li>
+<li><a href="https://forms.gle/4NWFdb8USJopqPwV7">Feedback form</a> — optional project feedback, not an official judging channel.</li>
+</ol>
+<p><strong>Evidence reviewed for this knowledge bank:</strong> Final polished 25-slide presentation; repository root README; <code>docs/README.md</code>; <code>config/model-acceptance.json</code>; <code>package.json</code>; and user-provided context that the team has direct factory access through Om. This content was prepared for technical explanation. It does not constitute an independent plant audit, security assessment or empirical validation study.</p>
+<p><strong>Last content review:</strong> 17 October 2026.<br />
+<strong>Maintained by:</strong> Team Nucleas.<br />
+<strong>Primary reader:</strong> Google Cloud AI Builder Cup judge, engineer, researcher or technically curious visitor.</p>
+</article>
+<footer class="foot">Prepared by Team Nucleas. Source-grounded project reference, not an independently audited factory study. <a href="CONTENT.md" download>Download Markdown source</a>. Last reviewed 17 October 2026.</footer>
+</main></div><a href="#top" class="back" aria-label="Back to top">↑ Top</a>
+<script>
+(function(){
+ const input=document.getElementById('kbsearch'), res=document.getElementById('searchresults'),doc=document.getElementById('document');
+ const sections=[...doc.querySelectorAll('h2,h3,h4')];
+ input.addEventListener('input',()=>{
+  const q=input.value.trim().toLowerCase(); res.replaceChildren();if(q.length<2)return;
+  let matches=[];
+  for(const h of sections){ if(h.textContent.toLowerCase().includes(q))matches.push(h); }
+  if(matches.length<5){
+    const textNodes=[...doc.querySelectorAll('p,li')].filter(e=>e.textContent.toLowerCase().includes(q));
+    for(const t of textNodes){if(matches.length>=12)break;const h=t.closest('section')?.querySelector('h2')||t.previousElementSibling||t; if(!matches.includes(t))matches.push(t);}
+  }
+  for(const m of matches.slice(0,12)){
+    const a=document.createElement('a');a.href='#'+(m.id||'document');a.textContent=(m.textContent||'Match').trim().slice(0,105);
+    a.addEventListener('click',()=>{if(!m.id){m.scrollIntoView({behavior:'smooth',block:'center'});}input.value='';res.replaceChildren()});res.append(a);
+  }
+  if(!matches.length)res.textContent='No matching headings or text.';
+ });
+ const links=[...document.querySelectorAll('.nav a')];
+ const obs=new IntersectionObserver(entries=>{for(const entry of entries){if(!entry.isIntersecting)continue;links.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+entry.target.id));}}, {rootMargin:'-100px 0px -72% 0px',threshold:0});
+ for(const h of doc.querySelectorAll('h2'))obs.observe(h);
+})();
+</script>
+</body></html>
