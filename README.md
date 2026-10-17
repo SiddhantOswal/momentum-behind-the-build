@@ -19,7 +19,7 @@ The idea emerged from real corrugation operations, where production inefficienci
 **Problem Statement:** Manufacturing: Intelligent Operations & Industrial Efficiency  
 **Submission Category:** Sustainability  
 **Team:** Nucleas - 
-**Leader:** Siddhant Oswal
+**Leader:** Siddhant Oswal & 
 **Teammate:** Om Jain
 
 ## How Momentum Works
