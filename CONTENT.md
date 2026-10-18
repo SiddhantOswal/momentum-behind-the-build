@@ -10,7 +10,7 @@
 
 > **The premise:** Before a manufacturing run starts, operators make a collection of decisions that influence material use, conversion cost, quality and practical feasibility. Momentum prepares those decisions for review using confirmed order data, bounded numerical comparisons and explainable AI-assisted recommendations. It does not operate machinery.
 
-**Explore:** [Live Momentum application](https://momentum-514663464609.asia-south1.run.app/) · [Public GitHub repository](https://github.com/SiddhantOswal/Momentum) · [Source and local setup](https://github.com/SiddhantOswal/Momentum/blob/main/docs/README.md) · [Optional project feedback](https://forms.gle/4NWFdb8USJopqPwV7)
+**Explore:** [Live Momentum application](https://momentum-ai.cloud.run/) · [Public GitHub repository](https://github.com/SiddhantOswal/Momentum) · [Source and local setup](https://github.com/SiddhantOswal/Momentum/blob/main/docs/README.md) · [Optional project feedback](https://forms.gle/4NWFdb8USJopqPwV7)
 
 ---
 
