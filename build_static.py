@@ -44,7 +44,7 @@ html_code='''<!DOCTYPE html>
 </style>
 </head>
 <body>
-<header class="top"><a class="brand" href="#top"><svg viewBox="0 0 32 32" fill="none" stroke="#c8a96b" stroke-width="1.8"><path d="M16 2 29 9v14L16 30 3 23V9zM3 9l13 7 13-7M16 16v14M10 5l13 7"/></svg>Momentum <small>BEHIND THE BUILD</small></a><div class="top-right"><a href="https://github.com/SiddhantOswal/Momentum" target="_blank" rel="noopener noreferrer">Source code</a><a href="https://momentum-514663464609.asia-south1.run.app/" class="primary" target="_blank" rel="noopener noreferrer">Open application ↗</a></div></header>
+<header class="top"><a class="brand" href="#top"><svg viewBox="0 0 32 32" fill="none" stroke="#c8a96b" stroke-width="1.8"><path d="M16 2 29 9v14L16 30 3 23V9zM3 9l13 7 13-7M16 16v14M10 5l13 7"/></svg>Momentum <small>BEHIND THE BUILD</small></a><div class="top-right"><a href="https://github.com/SiddhantOswal/Momentum" target="_blank" rel="noopener noreferrer">Source code</a><a href="https://momentum-ai.cloud.run/" class="primary" target="_blank" rel="noopener noreferrer">Open application ↗</a></div></header>
 <div class="layout" id="top">
 <aside class="sidebar"><strong>Explore Momentum</strong><div class="search-wrap"><input type="search" id="kbsearch" autocomplete="off" placeholder="Search the knowledge bank" aria-label="Search the knowledge bank"></div><div class="results" id="searchresults" aria-live="polite"></div><nav class="nav" aria-label="Document sections">__NAV__</nav><p class="status">Supervised prototype · Evidence-led</p></aside>
 <main class="main">
