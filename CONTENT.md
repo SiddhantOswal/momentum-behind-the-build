@@ -524,7 +524,7 @@ The following references are public and should remain visible from the published
 3. [Repository guide](https://github.com/SiddhantOswal/Momentum/blob/main/docs/README.md) — deployment, approved samples, testing, lifecycle and model-evidence limitations.
 4. [Model acceptance configuration](https://github.com/SiddhantOswal/Momentum/blob/main/config/model-acceptance.json) — exact thresholds, internal evaluation and September holdout, versions and owner exception.
 5. [Approved demonstration fixtures](https://github.com/SiddhantOswal/Momentum/tree/main/public/samples) — restricted sample POs, not open-ended customer input.
-6. [Deployed Momentum application](https://momentum-514663464609.asia-south1.run.app/) — current public entry point; user sessions and provider quotas may apply.
+6. [Deployed Momentum application](https://momentum-ai.cloud.run/) — current public entry point; user sessions and provider quotas may apply.
 7. **Momentum AI Builder Cup pitch:** link the approved public PDF here after it has been published. No public presentation URL was supplied when this reference was prepared.
 8. [Feedback form](https://forms.gle/4NWFdb8USJopqPwV7) — optional project feedback, not an official judging channel.
 
