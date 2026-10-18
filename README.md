@@ -4,7 +4,7 @@
 
 *A public technical companion to Team Nucleas's AI Builder Cup 2026 submission.*
 
-[**Explore the Knowledge Bank**](https://siddhantoswal.github.io/momentum-behind-the-build/) · [Live Application](https://momentum-514663464609.asia-south1.run.app/) · [Source Code](https://github.com/SiddhantOswal/Momentum) · [Share Feedback](https://forms.gle/4NWFdb8USJopqPwV7)
+[**Explore the Knowledge Bank**](https://siddhantoswal.github.io/momentum-behind-the-build/) · [Live Application](https://momentum-ai.cloud.run/) · [Source Code](https://github.com/SiddhantOswal/Momentum) · [Share Feedback](https://forms.gle/4NWFdb8USJopqPwV7)
 
 ---
 
